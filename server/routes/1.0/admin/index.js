@@ -81,6 +81,13 @@ router.get('/admin/student/find/by-code/1.0',(req,res)=>{
   });
 })
 
+router.post('/admin/add-teacher/1.0',(req,res)=>{
+  console.log(req.body)
+  resSec(req,res,(req,res)=>{
+    res.json("ok")
+  })
+})
+
 router.post("/admin/add-student/1.0", (req, res) => {
   console.log("/admin/add-student/1.0");
   console.log(req.body);

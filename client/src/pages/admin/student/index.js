@@ -149,10 +149,10 @@ const StudentPage = (props) => {
         path="/admin/student/add"
         render={() => (
           <AddStudentContainer
-            addStudentInDb={() =>
+            addStudentInDb={() =>{
               addStudentInDb(props.studentData, props.toggleIsLoading, () =>
                 props.setNewStudent("Created")
-              )
+              )}
             }
             arrInputs={() => arrInputs(props)}
             toggleIsLoading={props.toggleIsLoading}
