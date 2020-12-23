@@ -3,6 +3,7 @@ import {
   TOGGLE_IS_ADMIN,
   TOGGLE_IS_LOADING,
   SET_NEW_STUDENT_FIND_CODE,
+  SET_NEW_TEACHER,
 } from "./types/admin";
 
 const initialState = {
@@ -59,12 +60,12 @@ const reducerAdmin = (state = initialState, action) => {
         return { ...state };
       }
     case SET_NEW_STUDENT:
-      if (action.studentData === "Created") {
+      if (action.newStudentData === "Created") {
         return {
           ...state,
           student: {
             ...state.student,
-            add: { ...state.student.add, studentData: {} },
+            add: { ...state.student.newStudentData, newStudentData: {} },
           },
         };
       }
@@ -74,9 +75,9 @@ const reducerAdmin = (state = initialState, action) => {
           ...state.student,
           add: {
             ...state.student.add,
-            studentData: {
-              ...state.student.add.studentData,
-              ...action.studentData,
+            newStudentData: {
+              ...state.student.add.newStudentData,
+              ...action.newStudentData,
             },
           },
         },
@@ -94,6 +95,32 @@ const reducerAdmin = (state = initialState, action) => {
           },
         },
       };
+    case SET_NEW_TEACHER:
+      if (action.newTeacherData === "Created") {
+        return {
+          ...state,
+          teacher: {
+            ...state.teacher,
+            add: {
+              ...state.teacher.add,
+              newTeacherData: {},
+            },
+          },
+        };
+      }
+      return {
+        ...state,
+        teacher: {
+          ...state.teacher,
+          add: {
+            ...state.teacher.add,
+            newTeacherData: {
+              ...state.teacher.add.newTeacherData,
+              ...action.newTeacherData,
+            },
+          },
+        },
+      };
     default:
       return { ...state };
   }
@@ -104,13 +131,17 @@ export const toggleIsLoading = (isLoading) => ({
   type: TOGGLE_IS_LOADING,
   isLoading,
 });
-export const setNewStudent = (studentData) => ({
+export const setNewStudent = (newStudentData) => ({
   type: SET_NEW_STUDENT,
-  studentData,
+  newStudentData,
 });
 export const setNewStudentFindCode = (newCode) => ({
   type: SET_NEW_STUDENT_FIND_CODE,
   newCode,
 });
 
+export const setNewTeacher = (newTeacherData) => ({
+  type: SET_NEW_TEACHER,
+  newTeacherData,
+});
 export default reducerAdmin;

@@ -1,12 +1,12 @@
 import React from "react";
-import AddStudentInput from "../../../../components/body/admin/student/add-student/input-component";
-import AddStudentButton from "../../../../components/body/admin/student/add-student/button-component";
+import AddInputWithRef from "../../../../components/common/input-with-ref";
+import ButtonOnclickFunc from "../../../../components/common/button-onclick-func";
 
 const AddStudentContainer = (props) => {
   const UserInputsContainer = props
     .arrInputs()
     .map((obj) => (
-      <AddStudentInput
+      <AddInputWithRef
         onChange={obj.onChange}
         text={obj.text}
         refName={obj.refName}
@@ -17,7 +17,10 @@ const AddStudentContainer = (props) => {
   return (
     <div>
       {UserInputsContainer}
-      <AddStudentButton onClick={props.addStudentInDb} />
+      <ButtonOnclickFunc
+        onClick={props.addStudentInDb}
+        text="Добавити користувача!"
+      />
     </div>
   );
 };

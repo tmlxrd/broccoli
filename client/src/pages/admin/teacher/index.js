@@ -7,128 +7,84 @@ import AddTeacherContainer from "./add/index";
 import TeacherHomeComp from "../../../components/body/admin/teacher/index";
 const axios = require("axios");
 
+/*name: "Любов",
+        surname: "Турчанська",
+        middleName: "Михайлівна",
+        image:
+          "https://dn.khnu.km.ua/kpk/k_img.aspx?M=k2156&T=autors&I=image003&R=jpg",
+        bio:
+          "Викладач Коломийського політехнічного коледжу Національного університету «Львівська політехніка»",
+        code: 1234567,
+       */
 const arrInputs = (props) => {
   return [
     {
-      text: "ukr",
-      refName: "ukrName",
-      value: props.studentData.ukrName,
+      text: "",
+      refName: "name",
+      value: props.teacherData.name,
       placeholder: "Ім'я",
       onChange: (newValue) => {
-        props.setNewStudent({ ukrName: newValue });
+        props.setNewTeacher({ name: newValue });
       },
     },
     {
       text: "",
-      refName: "ukrSurname",
-      value: props.studentData.ukrSurname,
+      refName: "surname",
+      value: props.teacherData.surname,
       placeholder: "Прізвище",
       onChange: (newValue) => {
-        props.setNewStudent({ ukrSurname: newValue });
+        props.setNewTeacher({ surname: newValue });
       },
     },
     {
       text: "",
-      refName: "ukrMiddleName",
-      value: props.studentData.ukrMiddleName,
+      refName: "middleName",
+      value: props.teacherData.middleName,
       placeholder: "По батькові",
       onChange: (newValue) => {
-        props.setNewStudent({ ukrMiddleName: newValue });
-      },
-    },
-    {
-      text: "eng",
-      refName: "engName",
-      value: props.studentData.engName,
-      placeholder: "Ім'я",
-      onChange: (newValue) => {
-        props.setNewStudent({ engName: newValue });
-      },
-    },
-    {
-      text: "",
-      refName: "engSurname",
-      value: props.studentData.engSurname,
-      placeholder: "Прізвище",
-      onChange: (newValue) => {
-        props.setNewStudent({ engSurname: newValue });
-      },
-    },
-    {
-      text: "",
-      refName: "engMiddleName",
-      value: props.studentData.engMiddleName,
-      placeholder: "По батькові",
-      onChange: (newValue) => {
-        props.setNewStudent({ engMiddleName: newValue });
+        props.setNewTeacher({ middleName: newValue });
       },
     },
     {
       text: "",
       refName: "code",
-      value: props.studentData.code,
+      value: props.teacherData.code,
       placeholder: "Код доступу",
       onChange: (newValue) => {
-        props.setNewStudent({ code: newValue });
-      },
-    },
-    {
-      text: "",
-      refName: "registerNumber",
-      value: props.studentData.registerNumber,
-      placeholder: "Номер залікової книжки",
-      onChange: (newValue) => {
-        props.setNewStudent({ registerNumber: newValue });
-      },
-    },
-    {
-      text: "",
-      refName: "profession",
-      value: props.studentData.profession,
-      placeholder: "Спеціальність",
-      onChange: (newValue) => {
-        props.setNewStudent({ profession: newValue });
-      },
-    },
-    {
-      text: "",
-      refName: "daybookNumber",
-      value: props.studentData.daybookNumber,
-      placeholder: "Номер в списку",
-      onChange: (newValue) => {
-        props.setNewStudent({ daybookNumber: newValue });
+        props.setNewTeacher({ code: newValue });
       },
     },
     {
       text: "",
       refName: "image",
-      value: props.studentData.image,
+      value: props.teacherData.image,
       placeholder: "Посилання на зображення",
       onChange: (newValue) => {
-        props.setNewStudent({ image: newValue });
+        props.setNewTeacher({ image: newValue });
       },
     },
     {
       text: "",
-      refName: "entry",
-      value: props.studentData.entry,
-      placeholder: "Дата вступу",
+      refName: "bio",
+      value: props.teacherData.bio,
+      placeholder: "Опис вччителя",
       onChange: (newValue) => {
-        props.setNewStudent({ entry: newValue });
+        props.setNewTeacher({ boi: newValue });
       },
     },
   ];
 };
 
-const addStudentInDb = (studentData, toggleIsLoading, setNewStudent) => {
+const addTeacherInDb = (teacherData, toggleIsLoading, setNewTeacher) => {
   toggleIsLoading(true);
   axios
-    .post("/api/admin/add-student/1.0", studentData, {
+    .post("/api/admin/add-teacher/1.0", teacherData, {
       withCredentials: true,
     })
     .then((res) => {
+      debugger
       if (res.data.message === "Created") {
-        setNewStudent();
+        setNewTeacher();
       } else {
         alert(res.data.message);
       }
@@ -141,7 +97,6 @@ const addStudentInDb = (studentData, toggleIsLoading, setNewStudent) => {
 };
 
 const TeacherPage = (props) => {
-    debugger
   return (
     <Switch>
       <Route exact path="/admin/teacher" render={() => <TeacherHomeComp />} />
@@ -150,9 +105,18 @@ const TeacherPage = (props) => {
         path="/admin/teacher/add"
         render={() => (
           <AddTeacherContainer
+          addTeacherInDb={() =>{
+            addTeacherInDb(props.teacherData, props.toggleIsLoading, () =>
+              props.setNewTeacher("Created")
+            )}
+          }
+          arrInputs={()=>arrInputs(props)}
+          toggleIsLoading={props.toggleIsLoading}
+          isLoading={props.isLoading}
+          teacherData={props.teacherData}
             // addStudentInDb={() =>
-            //   addStudentInDb(props.studentData, props.toggleIsLoading, () =>
-            //     props.setNewStudent("Created")
+            //   addStudentInDb(props.teacherData, props.toggleIsLoading, () =>
+            //     props.setNewTeacher("Created")
             //   )
             // }
             // arrInputs={() => arrInputs(props)}
@@ -162,7 +126,7 @@ const TeacherPage = (props) => {
         )}
       />
      {/* <Route path="/admin/student/find" render={() => <FindStudent
-        setNewStudentFindCode={props.setNewStudentFindCode}
+        setNewTeacherFindCode={props.setNewTeacherFindCode}
       toggleIsLoading={props.toggleIsLoading}
             isLoading={props.isLoading}
      code={props.code} />} />*/}
@@ -170,8 +134,8 @@ const TeacherPage = (props) => {
     // <div>
     //   <AddStudentContainer
     //     addStudentInDb={() =>
-    //       addStudentInDb(props.studentData, props.toggleIsLoading, () =>
-    //         props.setNewStudent("Created")
+    //       addStudentInDb(props.teacherData, props.toggleIsLoading, () =>
+    //         props.setNewTeacher("Created")
     //       )
     //     }
     //     arrInputs={() => arrInputs(props)}
