@@ -1,7 +1,7 @@
 import React from "react"
 
 const AddTeacher =() =>{
-    return <div>techer</div>
+    return <div>teacher</div>
 }
 
 export default AddTeacher
