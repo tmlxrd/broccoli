@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddInputWithRef = (props) => {
+const AddInputWithRef = (props) => { 
   const refName = React.createRef();
   return (
     <div>

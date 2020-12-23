@@ -3,14 +3,15 @@ import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Preloader from "../../components/common/preloader";
 import AddStudent from "./student";
-import Student from './student/index'
+import Student from "./student/index";
 import TeacherPage from "./teacher";
 import { connect } from "react-redux";
 import {
+  setNewTeacher,
   toggleIsAdmin,
   toggleIsLoading,
   setNewStudent,
-  setNewStudentFindCode
+  setNewStudentFindCode,
 } from "../../redux/reducer-admin";
 import Home from "./home";
 
@@ -25,10 +26,10 @@ class AdminPage extends React.Component {
         this.props.toggleIsAdmin(res.data);
         this.props.toggleIsLoading(false);
       })
-      
-    .catch(function (error) {
-      alert(error);
-    });
+
+      .catch(function (error) {
+        alert(error);
+      });
   }
 
   render() {
@@ -41,20 +42,27 @@ class AdminPage extends React.Component {
           <Route exact path="/admin" render={() => <Home />} />
           <Route
             path="/admin/teacher"
-            render={() => <TeacherPage />}
+            render={() => (
+              <TeacherPage
+              setNewTeacher={this.props.setNewTeacher}
+                toggleIsLoading={this.props.toggleIsLoading}
+                isLoading={this.props.isLoading}
+                teacherData={this.props.teacher.newTeacherData}
+              />
+            )}
           />
           <Route
-          toggleIsLoading={this.props.toggleIsLoading}
-          isLoading={this.props.isLoading}
+            toggleIsLoading={this.props.toggleIsLoading}
+            isLoading={this.props.isLoading}
             path="/admin/student"
             render={() => (
               <Student
-                studentData={this.props.studentData}
+                studentData={this.props.student.newStudentData}
                 toggleIsLoading={this.props.toggleIsLoading}
                 isLoading={this.props.isLoading}
                 setNewStudent={this.props.setNewStudent}
                 setNewStudentFindCode={this.props.setNewStudentFindCode}
-                code={this.props.code}
+                code={this.props.student.studentCode}
               />
               // <AddStudent
               //   studentData={this.props.studentData}
@@ -73,17 +81,17 @@ class AdminPage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  
-  debugger
   return {
     isLoading: state.reducerAdmin.isLoading,
     isLogged: state.reducerAdmin.isLoading,
     isAdmin: state.reducerAdmin.isAdmin,
-    student: {newStudentData:state.reducerAdmin.student.add.newStudentData,
-      studentCode:state.reducerAdmin.student.find.byCode.code,},
-    teacher:{
-      newTeacherData:state.reducerAdmin.teacher.add.newTeacherData
-    }
+    student: {
+      newStudentData: state.reducerAdmin.student.add.newStudentData,
+      studentCode: state.reducerAdmin.student.find.byCode.code,
+    },
+    teacher: {
+      newTeacherData: state.reducerAdmin.teacher.add.newTeacherData,
+    },
   };
 };
 
@@ -91,5 +99,6 @@ export default connect(mapStateToProps, {
   toggleIsAdmin,
   toggleIsLoading,
   setNewStudent,
-  setNewStudentFindCode
+  setNewStudentFindCode,
+  setNewTeacher
 })(AdminPage);
