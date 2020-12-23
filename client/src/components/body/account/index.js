@@ -1,6 +1,7 @@
 import React from "react";
-import AccountComp from './components/account'
+import StudentComp from './components/student-component'
 import SubjectsComp from "./components/subjects";
+import TeacherComp from './components/teacher-component'
 
 // const Account = (props) => {
 //   if (!props.userData.isLogged) {
@@ -26,15 +27,16 @@ import SubjectsComp from "./components/subjects";
 class AccountPage extends React.Component {
 
   render(){
-    console.log(this.props);
-    dsadasd
     if (!this.props.userData.isLogged) {
-          return "не дsssозволено";
-        } else {d
+          return "не дозволено";
+        } else {
+          if(this.props.userData.userData.role==="teacher"){
+            return <TeacherComp userData={this.props.userData.userData} />
+          } else {
           return (<>
-            <AccountComp userData={this.props.userData} />
+            <StudentComp userData={this.props.userData.userData} />
             <SubjectsComp />
-          </>);
+          </>)}
         }
   }
 }

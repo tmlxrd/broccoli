@@ -3,9 +3,10 @@ const router = express.Router();
 const resSec = require("../../common/response-security");
 const validation = require("../../common/validation-user-data");
 const User = require("../../../models/user");
+const resCookie = require('../../common/res-cookie')
 
 router.get("/user/login/1.0", (req, res) => {
-  console.log("/user/login/1.0 cookies: ",req.cookies)
+  console.log("/user/login/1.0 cookies: ",req.cookies,", code: ",req.query.code)
   resSec(req, res, (req, res) => {
     const validationResult = validation.login.result(req.query.code);
     if (validationResult.message) {
@@ -25,12 +26,14 @@ router.get("/user/login/1.0", (req, res) => {
             message: "User not found",
           });
         } else {
+          console.log(docs[0].role)
           res.cookie("id", docs[0]._id);
           res.json({
             success: true,
             code: 200,
             message: "",
             data: {
+              role:docs[0].role,
               daybookNumber: docs[0].daybookNumber,
               image: docs[0].image,
               registerNumber: docs[0].registerNumber,
@@ -70,12 +73,14 @@ router.get("/user/login-with-cookie/1.0", (req, res) => {
             message: "Unauthorized. User changed cookie",
           });
         } else {
+          console.log(docs.role)
           res.cookie("id", docs._id);
           return res.json({
             success: true,
             code: 200,
             message: "",
             data: {
+              role:docs.role,
               nickname: docs.nickname,
               image: docs.image,
               daybookNumber: docs.daybookNumber,
@@ -98,6 +103,7 @@ router.get("/user/logout/1.0",(req,res)=>{
   resSec(req, res, (req, res) => {
     const validationResult = validation.oneString.validateCookie.result({
       id: req.cookies.id,
+      role:req.cookies.role
     });
     if (validationResult.message) {
       return res.json({
@@ -106,7 +112,7 @@ router.get("/user/logout/1.0",(req,res)=>{
         message: "Unauthorized. Cookie not found",
       });
     } else {
-      res.cookie("id","")
+      resCookie(res,null)
       return res.json({
         success:true,
         code: 200,

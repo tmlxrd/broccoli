@@ -11,7 +11,7 @@ class CodeInput extends React.Component {
         withCredentials: true,
       })
       .then((res) => {
-        this.props.setUser(res.data);
+        this.props.setUserData(res.data);
         this.props.toggleIsLoading(false);
       });
   };

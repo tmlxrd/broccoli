@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import CodeInput from ".";
 import {toggleIsLoading,setUserCode} from '../../../../redux/reducer-code-input-page'
-import {setUser} from '../../../../redux/reducer-auth'
+import {setUserData} from '../../../../redux/reducer-auth'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,5 +15,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     setUserCode,
     toggleIsLoading,
-    setUser
+    setUserData
 })(CodeInput);

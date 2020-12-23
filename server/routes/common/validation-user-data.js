@@ -54,10 +54,10 @@ const validation = {
   login:{
     _validateData:Joi.object({
       code:Joi.string()
-      .min(8)
+      .min(7)
       .max(8)
       .required()
-      .pattern(new RegExp("^[0-9]{8,8}$"))
+      .pattern(new RegExp("^[0-9]{7,8}$"))
       .messages({
         "string.min": "Length code error",
         "string.max": "Length code error",
@@ -79,23 +79,23 @@ const validation = {
   
   },
   oneString:{
-    validateNickname:{
+    validateTeacherCode:{
       _validateData: Joi.object({
-        nickname:Joi.string()
+        code:Joi.string()
         .min(3)
         .max(15)
         .required()
-        .pattern(new RegExp("^[a-z0-9]{3,15}$"))
+        .pattern(new RegExp("^[a-zA-Z0-9]{3,15}$"))
         .messages({
-          "string.min": "Мінімальна довжина ніку 3 символи",
-          "string.max": "Максимальна довжина ніку 15 символів",
-          "string.pattern": "Лише: [a-z0-9]",
-          "any.required": "Невідома проблема з ніком",
+          "string.min": "Code min length error",
+          "string.max": "Code max length error",
+          "string.pattern": "Code pattern error",
+          "any.required": "Code unknown error",
         }),
         }),
-      result:(data)=>{
-        const validationResult = validation.oneString.validateNickname._validateData.validate(
-          { nickname:data.nickname},
+      result:(code)=>{
+        const validationResult = validation.oneString.validateTeacherCode._validateData.validate(
+          { code:code},
           { abortEarly: false }
         );
         if(validationResult.error){
@@ -118,10 +118,21 @@ const validation = {
           "string.pattern": "Cookie pattern error",
           "any.required": "Cookie unknown error",
         }),
+        role:Joi.string()
+        .min(3)
+        .max(7)
+        .required()
+        .pattern(new RegExp("^[a-zA-Z0-9]{3,7}$"))
+        .messages({
+          "string.min": "Role min length error",
+          "string.max": "Role max length error",
+          "string.pattern": "Role pattern error",
+          "any.required": "Role unknown error",
+        }),
         }),
         result:(data)=>{
           const validationResult = validation.oneString.validateCookie._validateData.validate(
-            { id:data.id},
+            { id:data.id,role:data.role},
             { abortEarly: false }
           );
           if(validationResult.error){
@@ -174,7 +185,7 @@ const validation = {
       .min(1)
       .max(40)
       .required()
-      .pattern(new RegExp("^[0-9A-z]{1,40}$"))
+      .pattern(new RegExp("^[A-z]{1,40}$"))
       .messages({
         "string.min": "Ім'я по батькові студента англійською занадто коротке",
         "string.max": "Ім'я по батькові студента англійською занадто довге",
@@ -186,7 +197,7 @@ const validation = {
       .min(1)
       .max(40)
       .required()
-      .pattern(new RegExp("^[0-9A-z]{1,40}$"))
+      .pattern(new RegExp("^[A-z]{1,40}$"))
       .messages({
         "string.min": "Ім'я по студента англійською занадто коротке",
         "string.max": "Ім'я студента англійською занадто довге",
@@ -198,7 +209,7 @@ const validation = {
       .min(1)
       .max(40)
       .required()
-      .pattern(new RegExp("^[0-9A-z]{1,40}$"))
+      .pattern(new RegExp("^[A-z]{1,40}$"))
       .messages({
         "string.min": "Прізвище студента англійською занадто коротке",
         "string.max": "Прізвище англійською занадто довге",
@@ -210,7 +221,7 @@ const validation = {
       .min(1)
       .max(40)
       .required()
-      .pattern(new RegExp("^[0-9а-яА-Я]{1,40}$"))
+      .pattern(new RegExp("^[а-яА-Я]{1,40}$"))
       .messages({
         "string.min": "Ім'я по батькові студента українською занадто коротке",
         "string.max": "Ім'я по батькові українською занадто довге",
@@ -222,7 +233,7 @@ const validation = {
       .min(1)
       .max(40)
       .required()
-      .pattern(new RegExp("^[0-9а-яА-Я]{1,40}$"))
+      .pattern(new RegExp("^[а-яА-Я]{1,40}$"))
       .messages({
         "string.min": "Ім'я студента українською занадто коротке",
         "string.max": "Ім'я українською занадто довге",
@@ -234,7 +245,7 @@ const validation = {
       .min(1)
       .max(40)
       .required()
-      .pattern(new RegExp("^[0-9а-яА-Я]{1,40}$"))
+      .pattern(new RegExp("^[а-яА-Я]{1,40}$"))
       .messages({
         "string.min": "Прізвище студента українською занадто коротке",
         "string.max": "Прізвище українською занадто довге",
@@ -246,7 +257,7 @@ const validation = {
       .min(1)
       .max(5)
       .required()
-      .pattern(new RegExp("^[0-9a-zA-zа-яА-Я]{1,5}$"))
+      .pattern(new RegExp("^[a-zA-zа-яА-Я]{1,5}$"))
       .messages({
         "string.min": "Навчальний план занадто короткий",
         "string.max": "Навчальний план занадто довгий",

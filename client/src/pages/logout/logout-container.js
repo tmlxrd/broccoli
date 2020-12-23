@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Logout from ".";
-import {toggleIsLoading} from '../../../redux/reducer-logout'
-import {setUser} from '../../../redux/reducer-auth'
+import {toggleIsLoading} from '../../redux/reducer-logout'
+import {setUserData} from '../../redux/reducer-auth'
 
 const mapStateToProps = (state) => {
   return {
@@ -11,5 +11,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   toggleIsLoading,
-  setUser
+  setUserData
 })(Logout);

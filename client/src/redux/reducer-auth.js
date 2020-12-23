@@ -1,5 +1,8 @@
+import { SET_USER_DATA, TOGGLE_IS_LOADING } from "./types/auth";
+
 let initialState = {
   userData: {
+    role:null,
     daybookNumber: null,
     nickname: null,
     passportData: {
@@ -15,7 +18,7 @@ let initialState = {
 
 const reducerAuth = (state = initialState, action) => {
   switch (action.type) {
-    case "SET-USER-DATA":
+    case SET_USER_DATA:
       if (action.user.success) {
         if (action.user.message === "Logout success") {
           return { ...state, isLogged: false };
@@ -29,16 +32,16 @@ const reducerAuth = (state = initialState, action) => {
       } else {
         return { ...state, isLogged: false };
       }
-      case "TOGGLE-IS-LOADING":
+    case TOGGLE_IS_LOADING:
       return { ...state, isLoading: action.isLoading };
     default:
       return { ...state };
   }
 };
 
-export const setUser = (user) => ({ type: "SET-USER-DATA", user });
+export const setUserData = (user) => ({ type: SET_USER_DATA, user });
 export const toggleIsLoading = (isLoading) => ({
-  type: "TOGGLE-IS-LOADING",
+  type: TOGGLE_IS_LOADING,
   isLoading,
 });
 export default reducerAuth;

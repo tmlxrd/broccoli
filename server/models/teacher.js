@@ -36,6 +36,13 @@ const teacherSchema = mongoose.model(
 // const changePass = (newPass) =>{
 //     console.log(newPass)
 // }
+const getTeacherById =  (id, callback)=> {
+  teacherSchema.findById(id, callback);
+};
+
+const getTeacherByCode= (code,callback) =>{
+  teacherSchema.find({code:code},(error,data)=>callback(error,data))
+}
 
 // const addUser = (userData, callback)=> {
 // //   bcrypt.genSalt(10, (error, salt) => {
@@ -50,5 +57,7 @@ const teacherSchema = mongoose.model(
 // //   });
 // };
 module.exports = {
-    teacherSchema
+    teacherSchema,
+    getTeacherById,
+  getTeacherByCode,
 }

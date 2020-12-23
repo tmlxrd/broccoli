@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const userSchema = mongoose.model(
   "users",
   new Schema({
-    role:{type:String,default:'user'},
+    role:{type:String,default:'student'},
 	passportData:{
 		ukr:{
 			name:{type:String,default:""},

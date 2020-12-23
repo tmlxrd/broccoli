@@ -1,0 +1,2 @@
+export const SET_USER_DATA = "AUTH/SET_USER_DATA";
+export const TOGGLE_IS_LOADING = "AUTH/TOGGLE_IS_LOADING";

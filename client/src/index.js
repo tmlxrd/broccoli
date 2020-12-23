@@ -11,7 +11,7 @@ import { BrowserRouter} from 'react-router-dom';
 // import Head from './components/head';
 // import Body from './components/body';
 import store from './redux/store'
-import App from './components';
+import App from './app';
 import {Provider} from 'react-redux'
 
 ReactDOM.render(

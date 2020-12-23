@@ -1,6 +1,6 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
-import Preloader from "../../common/preloader";
+import Preloader from "../../components/common/preloader";
 const axios = require("axios");
 
 class Logout extends React.Component {
@@ -11,7 +11,7 @@ class Logout extends React.Component {
         withCredentials: true,
       })
       .then((res) => {
-        this.props.setUser(res.data)
+        this.props.setUserData(res.data)
         this.props.toggleIsLoading(false);
       });
   }
