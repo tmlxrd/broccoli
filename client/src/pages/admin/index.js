@@ -2,12 +2,11 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Preloader from "../../components/common/preloader";
-import AddStudent from "./student";
 import Student from "./student/index";
 import TeacherPage from "./teacher";
 import { connect } from "react-redux";
 import {
-  setNewTeacher,
+  setNewTeacher, 
   toggleIsAdmin,
   toggleIsLoading,
   setNewStudent,
